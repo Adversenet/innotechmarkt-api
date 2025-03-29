@@ -4,22 +4,30 @@
                   xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Domain\Authentication\Entity\User" repository-class="Infrastructure\Authentication\Doctrine\Repository\UserRepository" table="user">
+    <entity
+            name="Domain\Category\Entity\Category"
+            repository-class="Infrastructure\Category\Doctrine\Repository\CategoryRepository"
+            table="category"
+    >
         <unique-constraints>
-            <unique-constraint columns="email"/>
+            <unique-constraint columns="title" />
         </unique-constraints>
 
-        <id name="id" type="uuid" column="id" uniqiue="true">
+        <id name="id" type="uuid" column="id" unqiue="true">
             <generator strategy="CUSTOM"/>
             <custom-id-generator class="doctrine.uuid_generator"/>
         </id>
 
-        <!-- Value object -->
-        <embedded name="roles" class="Domain\Authentication\ValueObject\Roles" use-column-prefix="false" />
+        <field name="title" type="string" length="255" />
+        <field name="image" type="string" length="500" />
+        <field name="status" type="boolean">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
 
-        <field name="username" type="string" length="50"/>
-        <field name="email" type="string" length="180" unique="true"/>
-        <field name="password" type="string" length="4096" nullable="true"/>
+        <!-- value objects -->
+        <embedded name="meta" class="Domain\Category\ValueObject\CategoryMeta" use-column-prefix="true" />
 
         <!-- Timestamp -->
         <field name="created_at" type="datetime_immutable"/>
