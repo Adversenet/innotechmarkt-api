@@ -1,3 +1,0 @@
-[mysqld]
-innodb_force_recovery=1
-max_connections=250
